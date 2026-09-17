@@ -11,6 +11,7 @@ import FichaDialog from '@/components/template/FichaDialog'
 import WeeklyScheduleCard from '@/components/template/WeeklyScheduleCard'
 import { useEchoStore } from '@/store/echo-store'
 import { getLastSessionForTemplate } from '@/utils/schedule'
+import { byName } from '@/utils/format'
 import { parseFichaFile } from '@/lib/fichaShare'
 
 export default function TreinosPage() {
@@ -23,7 +24,7 @@ export default function TreinosPage() {
   const [importError, setImportError] = useState<string | null>(null)
   const importRef = useRef<HTMLInputElement>(null)
 
-  const avulsos = templates.filter((t) => !t.fichaId).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  const avulsos = templates.filter((t) => !t.fichaId).sort(byName)
 
   const handleImportFicha = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -116,9 +117,7 @@ export default function TreinosPage() {
               <FichaSection
                 key={ficha.id}
                 ficha={ficha}
-                templates={templates
-                  .filter((t) => t.fichaId === ficha.id)
-                  .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))}
+                templates={templates.filter((t) => t.fichaId === ficha.id).sort(byName)}
                 sessions={sessions}
               />
             ))}

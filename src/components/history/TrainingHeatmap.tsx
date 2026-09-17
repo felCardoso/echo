@@ -54,11 +54,11 @@ export default function TrainingHeatmap({ sessions }: { sessions: WorkoutSession
     return { weeks, monthMarkers }
   }, [sessions])
 
-  // Scroll to the end so the current month is in view instead of jan/2025.
+  // Start scrolled to the current week, not to the oldest one.
   useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollLeft = el.scrollWidth
-  }, [weeks])
+  }, [])
 
   const levelClass = (count: number) => {
     if (count <= 0) return 'bg-foreground/10'
