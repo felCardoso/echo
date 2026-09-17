@@ -16,6 +16,14 @@ export function parseLocalDateStr(dateStr: string): Date {
   return new Date(y, m - 1, d)
 }
 
+const ptCollator = new Intl.Collator('pt-BR')
+
+/** Alphabetical comparator for named records, using pt-BR collation so
+ * accented names sort where a Brazilian reader expects them. */
+export function byName(a: { name: string }, b: { name: string }): number {
+  return ptCollator.compare(a.name, b.name)
+}
+
 export function formatDuration(seconds: number): string {
   const h = Math.floor(seconds / 3600)
   const m = Math.floor((seconds % 3600) / 60)
